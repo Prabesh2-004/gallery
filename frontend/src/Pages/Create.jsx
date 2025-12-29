@@ -1,8 +1,15 @@
 import { X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
 
-const Create = ({images}) => {
+const Create = ({ setImages }) => {
+  const { toggleTheme } = useContext(ThemeContext)
   const [image, setImage] = useState(null);
+  const [title, setTitle] = useState('');
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value)
+  }
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -11,22 +18,40 @@ const Create = ({images}) => {
     }
   };
   const handleCreate = (e) => {
-    e.preventDefault()
-    if(image) {
-      images.push(image)
+    e.preventDefault();
+    if (!image || !title) return;
+
+    setImages(prev => [
+    ...prev,
+    {
+      title,
+      image
     }
-    setImage(null)
-  }
+  ]);
+    console.log(title)
+    console.log(image)
+    setTitle('')
+    setImage(null);
+  };
   return (
     <div className='flex justify-center min-h-[calc(100vh-96px)]'>
       <form action='#' onSubmit={handleCreate} method='post'>
         <label
           htmlFor='fileInput'
-          className={`border relative bg-white rounded-md text-sm w-80 border-indigo-600/60 p-8 flex flex-col items-center gap-4  ${image ? '' : 'cursor-pointer'} hover:border-indigo-500 transition`}
+          className={`border relative bg-white rounded-md text-sm w-80 border-indigo-600/60 p-8 flex flex-col items-center gap-4  ${
+            image ? '' : 'cursor-pointer'
+          } hover:border-indigo-500 transition`}
         >
-          {image ? <button onClick={() => setImage(null)} className='absolute right-5 top-5 border rounded-2xl cursor-pointer'>
-            <X />
-          </button> : ''}
+          {image ? (
+            <button
+              onClick={() => setImage(null)}
+              className='absolute right-5 top-5 border rounded-2xl cursor-pointer'
+            >
+              <X />
+            </button>
+          ) : (
+            ''
+          )}
           {image ? (
             <img src={image} alt='image' />
           ) : (
@@ -61,6 +86,17 @@ const Create = ({images}) => {
             </>
           )}
         </label>
+        <div className='flex flex-col gap-2 my-2'>
+          <label htmlFor='title' className={`${toggleTheme ? 'text-black' : 'text-white'}`}>
+            Image Title:{' '}
+          </label>
+          <input
+            type='text'
+            onChange={handleTitleChange}
+            placeholder='Enter Your Title'
+            className={`${toggleTheme ? 'text-black' : 'text-white'} border   p-2 `}
+          />
+        </div>
         <button
           type='submit'
           className='w-full text-white rounded cursor-pointer p-2 px-5 bg-green-500 mt-3'

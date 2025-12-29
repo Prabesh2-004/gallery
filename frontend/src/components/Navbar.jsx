@@ -9,7 +9,7 @@ const Navbar = () => {
         setToggleTheme(!toggleTheme)
     }
   return (
-    <div className={`w-full flex justify-between items-center px-10 py-5 fixed ${toggleTheme ? 'bg-white text-black shadow-md' : 'bg-black text-white shadow-[0_0_10px_rgba(255,255,255,0.7)]'} `}>
+    <div className={`w-full z-100 flex justify-between items-center px-10 py-5 fixed ${toggleTheme ? 'bg-white text-black shadow-md' : 'bg-black text-white shadow-[0_0_10px_rgba(255,255,255,0.7)]'} `}>
        <Link to='/' className='text-2xl font-bold'>Gallery</Link>
        <div className='flex gap-5 items-center'>
         <div className='flex items-center'>
