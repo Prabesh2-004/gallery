@@ -8,6 +8,7 @@ import { ThemeContext, ThemeProvider } from './context/ThemeContext';
 
 const App = () => {
   const { toggleTheme } = useContext(ThemeContext);
+    const [search, setSearch] = useState('')
   const [images,setImages] = useState([
     { image: '/frieren.jpeg', title: 'Frieren' },
     { image: '/frieren2.jpeg', title: 'Frieren'},
@@ -17,12 +18,12 @@ const App = () => {
     { image: 'https://i.pinimg.com/1200x/d2/8c/99/d28c99a9fcee56816e50b3871bbd5643.jpg', title: 'F1'},
     { image: 'https://i.pinimg.com/1200x/42/b9/8b/42b98b0e8dcd83f096195e89766360fa.jpg', title: 'Optimus Prime'},
   ]);
-
+  const filtering = images.filter(image => image.title.toLowerCase().includes(search))
   return (
     <div className={`flex flex-col ${toggleTheme ? 'bg-white' : 'bg-black'}`}>
-      <Layout>
+      <Layout setSearch={setSearch}>
         <Routes>
-          <Route path='/' element={<Home images={images} />} />
+          <Route path='/' element={<Home images={filtering} />} />
           <Route path='/create' element={<Create images={images} setImages={setImages} />} />
         </Routes>
       </Layout>
