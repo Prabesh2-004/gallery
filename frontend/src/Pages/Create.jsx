@@ -28,8 +28,6 @@ const Create = ({ setImages }) => {
       image
     }
   ]);
-    console.log(title)
-    console.log(image)
     setTitle('')
     setImage(null);
   };

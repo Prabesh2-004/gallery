@@ -9,7 +9,7 @@ const Navbar = ({setSearch}) => {
     setToggleTheme(!toggleTheme);
   };
   const handleSearch = (e) => {
-    setSearch(e.target.value)
+    setSearch((e.target.value).toLowerCase())
   }
   return (
     <div
